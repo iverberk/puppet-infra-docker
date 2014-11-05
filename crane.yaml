@@ -1,0 +1,41 @@
+---
+
+containers:
+
+  puppetdb:
+    image: iverberk/puppetdb:packer
+    run:
+      hostname: puppetdb.localdomain
+      volumes-from: ["puppetdb_datastore"]
+      cmd: sleep infinity
+      detach: true
+
+  puppetdb_datastore:
+    image: iverberk/puppetdb:packer
+    run:
+      volume: ["/var/lib/pgsql/data"]
+      cmd: ["/usr/bin/true"]
+      detach: true
+
+  foreman:
+    image: iverberk/foreman:packer
+    run:
+      link: ["puppetmaster:puppetmaster.localdomain"]
+      hostname: foreman.localdomain
+      volumes-from: ["foreman_datastore"]
+      cmd: sleep infinity
+      detach: true
+
+  foreman_datastore:
+    image: iverberk/foreman:packer
+    run:
+      volume: ["/var/lib/pgsql/data"]
+      cmd: ["/usr/bin/true"]
+      detach: true
+
+  puppetmaster:
+    image: iverberk/puppetmaster:packer
+    run:
+      detach: true
+      cmd: sleep infinity
+      link: ["puppetdb:puppetdb.localdomain"]
