@@ -3,15 +3,24 @@ node default {
   include infra::puppetmaster
 
   package { 'supervisor':
-  	ensure => present
-	} ->
+    ensure => present
+  } ->
 
   file { '/etc/supervisord.conf':
-  	ensure => present,
-  	owner => 'root',
-  	group => 'root',
-  	mode => 644,
-  	source => 'puppet:///modules/infra/supervisord/puppetmaster.conf'
-	}
+    ensure => present,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/infra/supervisord/puppetmaster.conf'
+  }
+
+  # Keep the foreman-proxy in the foreground so we
+  # can manage it with supervisord
+  file_line { 'foreman_proxy_no_daemonize':
+    path    => '/etc/foreman-proxy/settings.yml',
+    line    => ':daemon: false',
+    match   => '^:daemon:.*',
+    require => Exec['foreman-installer']
+  }
 
 }
