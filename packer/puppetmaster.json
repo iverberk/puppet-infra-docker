@@ -2,17 +2,17 @@
     "builders":[{
         "type": "docker",
         "image": "centos:centos6",
-        "export_path": "puppetdb.tar",
-        "run_command": ["-h=puppetdb.localdomain", "-d", "-i", "-t", "{{.Image}}", "/bin/bash"]
+        "export_path": "puppetmaster.tar",
+        "run_command": ["-h=puppetmaster.localdomain", "-d", "-i", "-t", "{{.Image}}", "/bin/bash"]
     }],
     "provisioners":[
         {
             "type": "shell",
-            "script": "./puppet.sh"
+            "script": "scripts/foreman.sh"
         },
         {
             "type": "puppet-masterless",
-            "manifest_file": "manifests/puppetdb.pp",
+            "manifest_file": "manifests/puppetmaster.pp",
             "module_paths": ["modules"],
             "prevent_sudo": true
         }

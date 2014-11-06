@@ -7,7 +7,7 @@ containers:
       volumes-from: ["puppetdb_datastore"]
       publish: ["8080:8080"]
       expose: ["8081"]
-      cmd: sleep infinity
+      cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       hostname: puppetdb.localdomain
       detach: true
 
@@ -23,9 +23,10 @@ containers:
     run:
       volumes-from: ["foreman_datastore"]
       publish: ["443:443"]
-      cmd: sleep infinity
+      cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       hostname: foreman.localdomain
       detach: true
+      link: ["puppetmaster:puppetmaster.localdomain"]
 
   foreman_datastore:
     image: iverberk/foreman:packer
@@ -37,8 +38,9 @@ containers:
   puppetmaster:
     image: iverberk/puppetmaster:packer
     run:
-      cmd: sleep infinity
+      add-host: ["foreman.localdomain:172.17.0.30"]
+      cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       detach: true
       hostname: puppetmaster.localdomain
       expose: ["8140", "8443"]
-      link: ["puppetdb:puppetdb.localdomain", "foreman:foreman.localdomain"]
+      link: ["puppetdb:puppetdb.localdomain"]
