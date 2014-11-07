@@ -14,7 +14,7 @@ node default {
 
   package { 'supervisor':
     ensure => present
-	} ->
+  } ->
 
   file { '/etc/supervisord.conf':
     ensure => present,
