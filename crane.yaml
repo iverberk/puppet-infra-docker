@@ -22,6 +22,7 @@ containers:
     image: iverberk/foreman:packer
     run:
       volumes-from: ["foreman_datastore"]
+      volume: ["./:/host"]
       publish: ["443:443"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       hostname: foreman.localdomain
@@ -38,7 +39,7 @@ containers:
   puppetmaster:
     image: iverberk/puppetmaster:packer
     run:
-      add-host: ["foreman.localdomain:172.17.0.30"]
+      volume: ["./environments:/etc/puppet/environments"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       detach: true
       hostname: puppetmaster.localdomain
