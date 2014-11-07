@@ -13,6 +13,6 @@ docker cp puppetmaster:/var/lib/puppet/ssl/certs/foreman.localdomain.pem certs/
 docker cp puppetmaster:/var/lib/puppet/ssl/private_keys/foreman.localdomain.pem private_keys/
 
 # Inject the certificates into the Foreman container
-cat certs/ca.pem | docker exec -i foreman sh -c 'cat > /var/lib/puppet/ssl/certs/ca.pem'
-cat certs/foreman.localdomain.pem | docker exec -i foreman sh -c 'cat > /var/lib/puppet/ssl/certs/foreman.localdomain.pem'
-cat private_keys/foreman.localdomain.pem | docker exec -i foreman sh -c 'cat > /var/lib/puppet/ssl/private_keys/foreman.localdomain.pem'
+docker exec -t foreman cp -f /host/certs/ca.pem /var/lib/puppet/ssl/certs/ca.pem
+docker exec -t foreman cp -f /host/certs/foreman.localdomain.pem /var/lib/puppet/ssl/certs/foreman.localdomain.pem
+docker exec -t foreman cp -f /host/private_keys/foreman.localdomain.pem /var/lib/puppet/ssl/private_keys/foreman.localdomain.pem
