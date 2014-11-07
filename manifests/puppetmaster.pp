@@ -23,4 +23,15 @@ node default {
     require => Exec['foreman-installer']
   }
 
+  class { 'hiera':
+    eyaml     => true
+    hierarchy => [
+      '%{::environment}/nodes/%{::clientcert}',
+      '%{::environment}/modules/%{module_name}',
+      '%{::environment}/vagrant',
+      '%{::environment}/common',
+      '%{::environment}/secrets'
+    ]
+  }
+
 }
