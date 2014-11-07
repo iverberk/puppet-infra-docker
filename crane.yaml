@@ -40,8 +40,16 @@ containers:
     image: iverberk/puppetmaster:packer
     run:
       volume: ["./environments:/etc/puppet/environments"]
+      volumes-from: ["puppetmaster_datastore"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       detach: true
       hostname: puppetmaster.localdomain
       expose: ["8140", "8443"]
       link: ["puppetdb:puppetdb.localdomain"]
+
+  puppetmaster_datastore:
+    image: iverberk/puppetmaster:packer
+    run:
+      volume: ["/var/lib/puppet/ssl"]
+      cmd: ["true"]
+      detach: true
