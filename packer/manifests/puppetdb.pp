@@ -22,6 +22,14 @@ node default {
     group  => 'root',
     mode   => '0644',
     source => 'puppet:///modules/infra/supervisord/puppetdb.conf'
+  } ->
+
+  file { '/start_puppetdb.sh':
+    ensure => present,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/infra/supervisord/start_puppetdb.sh'
   }
 
 }
