@@ -8,7 +8,7 @@
     "provisioners":[
         {
             "type": "shell",
-            "script": "scripts/foreman.sh"
+            "script": "foreman.sh"
         },
         {
             "type": "puppet-masterless",
