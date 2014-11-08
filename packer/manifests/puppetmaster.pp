@@ -24,7 +24,7 @@ node default {
   }
 
   class { 'hiera':
-    eyaml     => true
+    eyaml     => true,
     hierarchy => [
       '%{::environment}/nodes/%{::clientcert}',
       '%{::environment}/modules/%{module_name}',
