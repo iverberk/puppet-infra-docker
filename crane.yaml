@@ -5,6 +5,7 @@ containers:
     image: iverberk/puppetdb:packer
     run:
       volumes-from: ["puppetdb_datastore"]
+      volume: ["./:/host"]
       publish: ["8080:8080"]
       expose: ["8081"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
@@ -39,12 +40,13 @@ containers:
   puppetmaster:
     image: iverberk/puppetmaster:packer
     run:
-      volume: ["./environments:/etc/puppet/environments"]
+      volume: ["./environments:/etc/puppet/environments", "./hiera:/etc/puppet/hiera"]
       volumes-from: ["puppetmaster_datastore"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       detach: true
       hostname: puppetmaster.localdomain
-      expose: ["8140", "8443"]
+      expose: ["8443"]
+      publish: ["8140:8140"]
       link: ["puppetdb:puppetdb.localdomain"]
 
   puppetmaster_datastore:

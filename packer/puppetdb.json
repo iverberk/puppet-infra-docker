@@ -1,20 +1,48 @@
 {
-    "builders":[{
-        "type": "docker",
-        "image": "centos:centos6",
-        "export_path": "puppetdb.tar",
-        "run_command": ["-h=puppetdb.localdomain", "-d", "-i", "-t", "{{.Image}}", "/bin/bash"]
-    }],
-    "provisioners":[
-        {
-            "type": "shell",
-            "script": "puppet.sh"
-        },
-        {
-            "type": "puppet-masterless",
-            "manifest_file": "manifests/puppetdb.pp",
-            "module_paths": ["modules"],
-            "prevent_sudo": true
-        }
-    ]
+  "builders": [
+    {
+      "type": "docker",
+      "image": "centos:centos6",
+      "export_path": "puppetdb.tar",
+      "run_command": [
+        "-h=puppetdb.localdomain",
+        "-d",
+        "-i",
+        "-t",
+        "{{.Image}}",
+        "/bin/sh"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "certs/",
+      "destination": "/tmp/certs/"
+    },
+    {
+      "type": "file",
+      "source": "private_keys/",
+      "destination": "/tmp/private_keys/"
+    },
+    {
+      "type": "shell",
+      "environment_vars": [
+        "CERT=puppetdb.localdomain"
+      ],
+      "scripts": ["scripts/puppet.sh", "scripts/copy_certs.sh"]
+    },
+    {
+      "type": "puppet-masterless",
+      "manifest_file": "manifests/puppetdb.pp",
+      "module_paths": [
+        "modules"
+      ],
+      "prevent_sudo": true
+    },
+    {
+      "type": "shell",
+      "inline": "/usr/sbin/puppetdb ssl-setup"
+    }
+  ]
 }

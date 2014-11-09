@@ -10,14 +10,24 @@
         "-i",
         "-t",
         "{{.Image}}",
-        "/bin/bash"
+        "/bin/sh"
       ]
     }
   ],
   "provisioners": [
     {
+      "type": "file",
+      "source": "certs/",
+      "destination": "/tmp/certs/"
+    },
+    {
+      "type": "file",
+      "source": "private_keys/",
+      "destination": "/tmp/private_keys/"
+    },
+    {
       "type": "shell",
-      "script": "foreman.sh"
+      "script": "scripts/foreman.sh"
     },
     {
       "type": "puppet-masterless",
@@ -26,6 +36,13 @@
         "modules"
       ],
       "prevent_sudo": true
+    },
+    {
+      "type": "shell",
+      "environment_vars": [
+        "CERT=foreman.localdomain"
+      ],
+      "script": "scripts/copy_certs.sh"
     }
   ]
 }
