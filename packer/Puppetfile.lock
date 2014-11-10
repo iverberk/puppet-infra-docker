@@ -28,7 +28,7 @@ GIT
 GIT
   remote: https://github.com/iverberk/puppet-infra.git
   ref: master
-  sha: 58fcf5c46af6d9bdbe8875bce0947a6ccc470f15
+  sha: e6c6f3955d5b9d4970a30ba64644f29e4d7e7185
   specs:
     iverberk-puppet-infra (0.1.0)
       puppetlabs-stdlib (>= 1.0.0)
