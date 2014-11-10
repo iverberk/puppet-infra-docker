@@ -5,7 +5,6 @@ containers:
     image: iverberk/puppetdb:packer
     run:
       volumes-from: ["puppetdb_datastore"]
-      volume: ["./:/host"]
       publish: ["8080:8080"]
       expose: ["8081"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
@@ -23,7 +22,6 @@ containers:
     image: iverberk/foreman:packer
     run:
       volumes-from: ["foreman_datastore"]
-      volume: ["./:/host"]
       publish: ["443:443"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       hostname: foreman.dev.local
