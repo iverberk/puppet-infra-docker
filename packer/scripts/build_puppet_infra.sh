@@ -8,21 +8,21 @@ docker import - puppetmaster:packer < puppetmaster.tar > /dev/null
 
 echo -e "Generating certificates for PuppetDB and Foreman..."
 
-docker run --name="foreman_cert" -t puppetmaster:packer puppet cert generate foreman.localdomain > /dev/null
+docker run --name="foreman_cert" -t puppetmaster:packer puppet cert generate foreman.dev.local > /dev/null
 docker commit foreman_cert puppetmaster:packer > /dev/null
 
-docker run --name="puppetdb_cert" -t puppetmaster:packer puppet cert generate puppetdb.localdomain > /dev/null
+docker run --name="puppetdb_cert" -t puppetmaster:packer puppet cert generate puppetdb.dev.local > /dev/null
 
 echo -e "Copying certificates from the container..."
 mkdir -p certs
 mkdir -p private_keys
 
 docker cp puppetdb_cert:/var/lib/puppet/ssl/certs/ca.pem certs/
-docker cp puppetdb_cert:/var/lib/puppet/ssl/certs/foreman.localdomain.pem certs/
-docker cp puppetdb_cert:/var/lib/puppet/ssl/certs/puppetdb.localdomain.pem certs/
+docker cp puppetdb_cert:/var/lib/puppet/ssl/certs/foreman.dev.local.pem certs/
+docker cp puppetdb_cert:/var/lib/puppet/ssl/certs/puppetdb.dev.local.pem certs/
 
-docker cp puppetdb_cert:/var/lib/puppet/ssl/private_keys/foreman.localdomain.pem private_keys/
-docker cp puppetdb_cert:/var/lib/puppet/ssl/private_keys/puppetdb.localdomain.pem private_keys/
+docker cp puppetdb_cert:/var/lib/puppet/ssl/private_keys/foreman.dev.local.pem private_keys/
+docker cp puppetdb_cert:/var/lib/puppet/ssl/private_keys/puppetdb.dev.local.pem private_keys/
 
 docker commit puppetdb_cert puppetmaster:packer > /dev/null
 
