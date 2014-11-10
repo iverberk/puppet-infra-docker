@@ -5,7 +5,7 @@
       "image": "centos:centos6",
       "export_path": "puppetdb.tar",
       "run_command": [
-        "-h=puppetdb.localdomain",
+        "-h=puppetdb.dev.local",
         "-d",
         "-i",
         "-t",
@@ -28,7 +28,7 @@
     {
       "type": "shell",
       "environment_vars": [
-        "CERT=puppetdb.localdomain"
+        "CERT=puppetdb.dev.local"
       ],
       "scripts": ["scripts/puppet.sh", "scripts/copy_certs.sh"]
     },
@@ -42,7 +42,7 @@
     },
     {
       "type": "shell",
-      "inline": "/usr/sbin/puppetdb ssl-setup"
+      "inline": "/usr/libexec/puppetdb/puppetdb-ssl-setup -f && rm -rf /tmp/certs /tmp/private_keys"
     }
   ]
 }

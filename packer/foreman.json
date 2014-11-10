@@ -5,7 +5,7 @@
       "image": "centos:centos6",
       "export_path": "foreman.tar",
       "run_command": [
-        "-h=foreman.localdomain",
+        "-h=foreman.dev.local",
         "-d",
         "-i",
         "-t",
@@ -30,6 +30,13 @@
       "script": "scripts/foreman.sh"
     },
     {
+      "type": "shell",
+      "environment_vars": [
+        "CERT=foreman.dev.local"
+      ],
+      "script": "scripts/copy_certs.sh"
+    },
+    {
       "type": "puppet-masterless",
       "manifest_file": "manifests/foreman.pp",
       "module_paths": [
@@ -39,10 +46,7 @@
     },
     {
       "type": "shell",
-      "environment_vars": [
-        "CERT=foreman.localdomain"
-      ],
-      "script": "scripts/copy_certs.sh"
+      "inline": "rm -rf /tmp/certs /tmp/private_keys"
     }
   ]
 }

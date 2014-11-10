@@ -3,7 +3,7 @@
         "type": "docker",
         "image": "centos:centos6",
         "export_path": "puppetmaster.tar",
-        "run_command": ["-h=puppetmaster.localdomain", "-d", "-i", "-t", "{{.Image}}", "/bin/bash"]
+        "run_command": ["-h=puppetmaster.dev.local", "-d", "-i", "-t", "{{.Image}}", "/bin/bash"]
     }],
     "provisioners":[
         {
