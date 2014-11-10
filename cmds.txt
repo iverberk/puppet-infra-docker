@@ -1,0 +1,9 @@
+docker run --name=puppetdb_datastore -d -v /var/lib/pgsql/data iverberk/puppetdb:packer true
+docker run --name=foreman_datastore -d -v /var/lib/pgsql/data iverberk/foreman:packer true
+docker run --name=puppetmaster_datastore -d -v /var/lib/puppet/ssl iverberk/puppetmaster:packer true
+
+docker run -h puppetdb.dev.local --name=puppetdb -d -p 8080:8080 --volumes-from=puppetdb_datastore --expose=8081 iverberk/puppetdb:packer /usr/bin/supervisord -c /etc/supervisord.conf
+
+docker run -h puppetmaster.dev.local --name=puppetmaster -d -p 8140:8140 --volumes-from=puppetmaster_datastore --expose=8443 iverberk/puppetmaster:packer /usr/bin/supervisord -c /etc/supervisord.conf
+
+docker run -h foreman.dev.local --name=foreman -d -p 443:443 --volumes-from=foreman_datastore iverberk/foreman:packer /usr/bin/supervisord -c /etc/supervisord.conf
