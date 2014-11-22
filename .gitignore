@@ -4,3 +4,6 @@ certs/
 private_keys/
 .librarian/
 *.tar
+environments/
+hiera/
+*.sublime*
