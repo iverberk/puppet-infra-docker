@@ -4,12 +4,13 @@ containers:
   puppetdb:
     image: iverberk/puppetdb:packer
     run:
+      dns: ["172.17.42.1", "8.8.8.8", "8.8.4.4"]
+      detach: true
       volumes-from: ["puppetdb_datastore"]
       publish: ["8080:8080"]
       expose: ["8081"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
-      hostname: puppetdb.dev.local
-      detach: true
+      hostname: puppetdb.localdomain
 
   puppetdb_datastore:
     image: iverberk/puppetdb:packer
@@ -21,10 +22,11 @@ containers:
   foreman:
     image: iverberk/foreman:packer
     run:
+      dns: ["172.17.42.1", "8.8.8.8", "8.8.4.4"]
       volumes-from: ["foreman_datastore"]
       publish: ["443:443"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
-      hostname: foreman.dev.local
+      hostname: foreman.localdomain
       detach: true
 
   foreman_datastore:
@@ -37,11 +39,12 @@ containers:
   puppetmaster:
     image: iverberk/puppetmaster:packer
     run:
+      dns: ["172.17.42.1", "8.8.8.8", "8.8.4.4"]
       volume: ["./environments:/etc/puppet/environments", "./hiera:/etc/puppet/hiera"]
       volumes-from: ["puppetmaster_datastore"]
       cmd: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
       detach: true
-      hostname: puppetmaster.dev.local
+      hostname: puppetmaster.localdomain
       expose: ["8443"]
       publish: ["8140:8140"]
 
