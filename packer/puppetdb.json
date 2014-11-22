@@ -5,7 +5,7 @@
       "image": "centos:centos6",
       "export_path": "puppetdb.tar",
       "run_command": [
-        "-h=puppetdb.dev.local",
+        "-h=puppetdb.localdomain",
         "-d",
         "-i",
         "-t",
@@ -28,7 +28,7 @@
     {
       "type": "shell",
       "environment_vars": [
-        "CERT=puppetdb.dev.local"
+        "CERT=puppetdb.localdomain"
       ],
       "scripts": ["scripts/puppet.sh", "scripts/copy_certs.sh"]
     },

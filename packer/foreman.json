@@ -5,7 +5,7 @@
       "image": "centos:centos6",
       "export_path": "foreman.tar",
       "run_command": [
-        "-h=foreman.dev.local",
+        "-h=foreman.localdomain",
         "-d",
         "-i",
         "-t",
@@ -32,7 +32,7 @@
     {
       "type": "shell",
       "environment_vars": [
-        "CERT=foreman.dev.local"
+        "CERT=foreman.localdomain"
       ],
       "script": "scripts/copy_certs.sh"
     },
