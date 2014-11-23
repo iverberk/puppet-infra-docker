@@ -1,6 +1,6 @@
 ## Introduction
 
-This repository contains all the scripts and configuration needed to setup a local Puppet development stack (consiting of Puppetmaster, The Foreman and PuppetDB) based on Docker containers. It is fully described in my [blog post](http://www.ivoverberk.nl/docker-tutorial-puppet-and-the-foreman/).
+This repository contains all the scripts and configuration needed to setup a local Puppet development stack based on Docker containers (consisting of a Puppetmaster, The Foreman and PuppetDB). It is fully described in my [blog post](http://www.ivoverberk.nl/docker-tutorial-puppet-and-the-foreman/).
 
 ## Usage
 
@@ -41,5 +41,5 @@ In the scripts folder you will find a script that resets the password for The Fo
 
 #### Puppet environments and Hiera
 
-The repository contains two dummy directories that are used by the Puppetmaster to look for environments and Puppet modules. The hiera directory is used to lookup Hiera data files. These directories are mapped to the containers as volumes. The Hiera configuration can be found in the packer/manifests/puppetmaster.pp configuration file. You can change the hierarchy how you want it.
+The repository contains two dummy directories that are used by the Puppetmaster to look for environments and Hiera data. These directories are mapped to the containers as volumes. The Hiera configuration can be found in the packer/manifests/puppetmaster.pp configuration file. You can change the hierarchy how you want it.
 
