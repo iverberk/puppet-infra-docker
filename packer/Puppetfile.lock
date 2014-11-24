@@ -6,7 +6,7 @@ FORGE
     puppetlabs-concat (1.1.2)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
     puppetlabs-firewall (1.2.0)
-    puppetlabs-inifile (1.1.4)
+    puppetlabs-inifile (1.2.0)
     puppetlabs-postgresql (4.1.0)
       puppetlabs-apt (< 2.0.0, >= 1.1.0)
       puppetlabs-concat (< 2.0.0, >= 1.1.0)
@@ -16,7 +16,7 @@ FORGE
       puppetlabs-inifile (< 2.0.0, >= 1.1.3)
       puppetlabs-postgresql (< 5.0.0, >= 4.0.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.2.2)
-    puppetlabs-stdlib (4.3.2)
+    puppetlabs-stdlib (4.4.0)
 
 GIT
   remote: https://github.com/benjamink/puppet-hiera.git
@@ -28,7 +28,7 @@ GIT
 GIT
   remote: https://github.com/iverberk/puppet-infra.git
   ref: master
-  sha: e6c6f3955d5b9d4970a30ba64644f29e4d7e7185
+  sha: cf4f9a6d4e9843bac257be6f171f58593f75d1eb
   specs:
     iverberk-puppet-infra (0.1.0)
       puppetlabs-stdlib (>= 1.0.0)
