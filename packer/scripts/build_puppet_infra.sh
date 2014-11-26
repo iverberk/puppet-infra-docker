@@ -1,11 +1,11 @@
 #!/bin/bash -e
 
-if [ -z "$1" ]; then
-	echo "Please supply a local domain for the containers"
-	exit 1
-fi
+#if [ -z "$1" ]; then
+#	echo "Please supply a local domain for the containers"
+#	exit 1
+#fi
 
-if [ -z "$2" ]; then
+if [ -z "$1" ]; then
 	echo "Please provide a name for the images (NAME/puppetdb:packer, NAME/puppetmaster:packer, etc.)"
 	exit 1
 fi
@@ -13,8 +13,8 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/.."
 
-DOMAIN=$1
-NAME=$2
+DOMAIN=localdomain
+NAME=$1
 
 FOREMAN=foreman.json
 PUPPETDB=puppetdb.json
