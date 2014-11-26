@@ -22,16 +22,15 @@ The packer directory contains all the scripts and configuration files to build D
 
 There is also a Puppetfile that you can use to install the required Puppet modules with librarian-puppet.
 
-In the packer/scripts directory you will find the main [build script](https://github.com/iverberk/puppet-infra-docker/blob/master/packer/scripts/build_puppet_infra.sh) that automates the whole process of image building. You should run this script to generate new images. It is a very simple script that takes two parameters:
+In the packer/scripts directory you will find the main [build script](https://github.com/iverberk/puppet-infra-docker/blob/master/packer/scripts/build_puppet_infra.sh) that automates the whole process of image building. You should run this script to generate new images. It is a very simple script that takes one parameter:
 
-1. The local domain name that you wish to use for your Docker containers
-2. The name for the Docker images. This allows you to push the built images to your Docker registry account
+1. The name for the Docker images. This allows you to push the built images to your Docker registry account
 
 To build the images I would run:
 
-```./build_puppet_infra.sh localdomain iverberk```
+```./build_puppet_infra.sh iverberk```
 
-The other scripts are helpers to the main build script and should not be used directly.
+This would result in *iverberk/puppetmaster:packer*, *iverberk/foreman:packer*, etc. images. The other scripts are helpers to the main build script and should not be used directly.
 
 The manifests directory contains Puppet configurations for the containers. There is a configuration file for PuppetDB, The Foreman and the Puppetmaster. Packer uses these scripts to run Puppet in the containers. They contain little tweaks to make everything work in my setup. You can change them however you like.
 
