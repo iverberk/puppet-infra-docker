@@ -7,3 +7,5 @@ private_keys/
 environments/
 hiera/
 *.sublime*
+packer/builds/
+packer/packer_cache

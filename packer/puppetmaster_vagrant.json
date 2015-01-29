@@ -1,0 +1,35 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "builds/packer-centos-6.6-x86_64.ovf",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "600s",
+      "ssh_port": 22,
+      "shutdown_command": "echo 'packer' | sudo -S shutdown -P now"
+    }
+  ],
+  "provisioners":[
+    {
+        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+        "type": "shell",
+        "script": "scripts/vagrant/puppetmaster.sh"
+    },
+    {
+        "type": "puppet-masterless",
+        "manifest_file": "manifests/puppetmaster_vagrant.pp",
+        "module_paths": ["modules"]
+    },
+    {
+        "type": "shell",
+        "script": "scripts/vagrant/cleanup.sh"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "builds/packer-puppetmaster.box",
+      "type": "vagrant"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 20480,
+      "guest_os_type": "RedHat_64",
+      "headless": false,
+      "http_directory": "http",
+      "output_directory": "builds",
+      "iso_urls": [
+        "iso/CentOS-6.6-x86_64-minimal.iso",
+        "http://centos.mirrors.hoobly.com/6.6/isos/x86_64/CentOS-6.6-x86_64-minimal.iso"
+      ],
+      "iso_checksum_type": "md5",
+      "iso_checksum": "eb3c8be6ab668e6d83a118323a789e6c",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "packer-centos-6.6-x86_64",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "512"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ]
+      ]
+    }
+  ],
+  "provisioners":[
+    {
+        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+        "type": "shell",
+        "script": "scripts/vagrant/virtualbox.sh"
+    },
+    {
+        "type": "shell",
+        "script": "scripts/vagrant/vagrant.sh"
+    },
+    {
+        "type": "shell",
+        "script": "scripts/vagrant/cleanup.sh"
+    }
+  ]
+}

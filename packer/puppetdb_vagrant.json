@@ -1,0 +1,57 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "builds/packer-centos-6.6-x86_64.ovf",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "600s",
+      "ssh_port": 22,
+      "shutdown_command": "echo 'packer' | sudo -S shutdown -P now"
+    }
+  ],
+  "provisioners": [
+    {
+        "type": "file",
+        "source": "puppetdb.localdomain.crt",
+        "destination": "/tmp/puppetdb.localdomain.crt"
+    },
+    {
+        "type": "file",
+        "source": "puppetdb.localdomain.key",
+        "destination": "/tmp/puppetdb.localdomain.key"
+    },
+    {
+        "type": "file",
+        "source": "ca.pem",
+        "destination": "/tmp/ca.pem"
+    },
+    {
+        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+        "type": "shell",
+        "script": "scripts/vagrant/puppetdb.sh"
+    },
+    {
+      "type": "puppet-masterless",
+      "manifest_file": "manifests/puppetdb.pp",
+      "module_paths": [
+        "modules"
+      ]
+    },
+    {
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+      "type": "shell",
+      "inline": "sudo /usr/libexec/puppetdb/puppetdb-ssl-setup -f && rm -rf /tmp/certs /tmp/private_keys"
+    },
+    {
+        "type": "shell",
+        "script": "scripts/vagrant/cleanup.sh"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "builds/packer-puppetdb.box",
+      "type": "vagrant"
+    }
+  ]
+}
